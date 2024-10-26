@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class and Subject Selection</title>
+  <style>
+    /* Simple styling for popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border: 2px solid black;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .popup.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Select Class and Subjects</h1>
+
+  <!-- Dropdown for selecting class -->
+  <label for="classSelect">Choose Class:</label>
+  <select id="classSelect">
+    <option value="">--Select Class--</option>
+    <option value="class1">Class 1</option>
+    <option value="class2">Class 2</option>
+    <option value="class3">Class 3</option>
+    <option value="class4">Class 4</option>
+    <option value="class5">Class 5</option>
+    <option value="class6">Class 6</option>
+    <option value="class7">Class 7</option>
+    <option value="class8">Class 8</option>
+    <option value="class9">Class 9</option>
+    <option value="class10">Class 10</option>
+  </select>
+
+  <!-- Button to open subject selection popup -->
+  <button id="subjectBtn" disabled>Select Subjects</button>
+
+  <!-- Popup for subject selection -->
+  <div class="popup" id="subjectPopup">
+    <h2>Select Subjects</h2>
+    <label><input type="checkbox" value="Maths"> Maths</label><br>
+    <label><input type="checkbox" value="Science"> Science</label><br>
+    <label><input type="checkbox" value="English"> English</label><br>
+    <label><input type="checkbox" value="Hindi"> Hindi</label><br>
+    <label><input type="checkbox" value="Sanskrit"> Sanskrit</label><br>
+    <label><input type="checkbox" value="History"> History</label><br>
+    <label><input type="checkbox" value="Geography"> Geography</label><br>
+    <label><input type="checkbox" value="Economics"> Economics</label><br>
+    <label><input type="checkbox" value="Sociology"> Sociology</label><br>
+    <button id="saveSubjects">Save Subjects</button>
+    <button id="closePopup">Close</button>
+  </div>
+
+  <!-- Placeholder for showing saved subjects -->
+  <h3>Selected Subjects:</h3>
+  <ul id="selectedSubjectsList"></ul>
+
+  <script>
+    const classSelect = document.getElementById('classSelect');
+    const subjectBtn = document.getElementById('subjectBtn');
+    const subjectPopup = document.getElementById('subjectPopup');
+    const saveSubjectsBtn = document.getElementById('saveSubjects');
+    const closePopupBtn = document.getElementById('closePopup');
+    const selectedSubjectsList = document.getElementById('selectedSubjectsList');
+
+    // Enable subject button after selecting class
+    classSelect.addEventListener('change', function () {
+      subjectBtn.disabled = !classSelect.value;
+    });
+
+    // Open subject popup
+    subjectBtn.addEventListener('click', function () {
+      subjectPopup.classList.add('active');
+    });
+
+    // Close subject popup
+    closePopupBtn.addEventListener('click', function () {
+      subjectPopup.classList.remove('active');
+    });
+
+    // Save selected subjects and display them
+    saveSubjectsBtn.addEventListener('click', function () {
+      selectedSubjectsList.innerHTML = ''; // Clear previous selection
+      const selectedSubjects = Array.from(subjectPopup.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+
+      selectedSubjects.forEach(subject => {
+        const li = document.createElement('li');
+        li.textContent = subject;
+        selectedSubjectsList.appendChild(li);
+      });
+
+      subjectPopup.classList.remove('active'); // Close popup after saving
+      alert("Subjects saved successfully!");
+    });
+  </script>
+</body>
+</html>
